@@ -1,0 +1,36 @@
+/* Application branding */ 
+.app-brand {
+    color: var(--primary);
+    font-family: var(--font-body);
+}
+
+/* Navigation links */ 
+.nav-pills ::deep .nav-link {
+    color: var(--on-surface-var);
+    background: transparent;
+    border-radius: var(--radius-md);
+    font-weight: 500;
+    padding: 12px 16px;
+
+    transition: background 0.2s ease,
+        color 0.2s ease;
+} 
+
+/* Hover state */ 
+.nav-pills ::deep .nav-link:hover {
+    background: var(--surface-high);
+    color: var(--on-surface);
+}
+
+/* Active navigation link */ 
+.nav-pills ::deep .nav-link.active {
+    background: var(--primary-container);
+    color: var(--on-primary);
+    font-weight: 700;
+}
+
+/* Keyboard navigation */
+.nav-pills ::deep .nav-link:focus-visible {
+    outline: 2px solid var(--primary);
+    outline-offset: 2px;
+}

@@ -1,0 +1,44 @@
+.library-page {
+    --library-green: #53e076;
+    --library-blue: #78b7ff;
+
+}
+
+.library-page .quiz-card {
+    height: 100%;
+    padding: 22px;
+    border: 1px solid rgba(214, 227, 255, .12);
+    border-radius: 14px;
+    background: var (--surface, #112036);
+    color: var(--on-surface, #fff);
+
+}
+
+.library-page .collection-card {
+    border-left: 3px solid (--library-blue);
+
+}
+
+.library-page .quiz-card {
+    border-left: 3px solid var(--library-green);
+}
+
+.library-page .quiz-languages,
+.library-page .quiz-meta {
+    color: var(--on-surface-var, #9caac0);
+    font-size: 13px;
+}
+
+.library-page .quiz-meta {
+    margin-top: auto;
+    padding: 16px;
+}
+
+.library-page .quiz-card-link {
+    color: inherit;
+    text-decoration: none;
+}
+
+.library-page .quiz-card-link:hover {
+    color: inherit;
+}

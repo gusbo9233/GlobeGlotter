@@ -1,0 +1,203 @@
+##################################################
+# .NET 10 / ASP.NET Core / Blazor / EF Core
+##################################################
+
+# Build outputs
+[Bb]in/
+[Oo]bj/
+[Dd]ebug/
+[Rr]elease/
+x64/
+x86/
+arm64/
+artifacts/
+publish/
+
+# .NET generated files
+*.dll
+*.exe
+*.pdb
+*.mdb
+*.cache
+*.deps.json
+*.runtimeconfig.dev.json
+*.AssemblyReference.cache
+
+# User-specific project files
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+*.rsuser
+
+##################################################
+# IDEs and Editors
+##################################################
+
+# Visual Studio
+.vs/
+*.VC.db
+*.VC.opendb
+*.opendb
+*.sdf
+*.opensdf
+
+# Visual Studio Code
+.vscode/*
+!.vscode/extensions.json
+!.vscode/settings.json
+!.vscode/launch.json
+!.vscode/tasks.json
+
+# JetBrains Rider / ReSharper
+.idea/
+_ReSharper*/
+*.[Rr]e[Ss]harper
+*.DotSettings.user
+*.sln.iml
+
+##################################################
+# ASP.NET Core / Blazor
+##################################################
+
+# Generated static web assets
+*.staticwebassets.runtime.json
+*.staticwebassets.endpoints.json
+*.staticwebassets.build.json
+*.staticwebassets.pack.json
+
+# Blazor scoped CSS generated files
+*.bundle.scp.css
+
+# Generated frontend assets
+wwwroot/_framework/
+wwwroot/_content/
+
+# Node.js / frontend tooling
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-store/
+dist/
+coverage/
+
+##################################################
+# Entity Framework Core
+##################################################
+
+# EF Core design-time temporary files
+*.dbmdl
+
+# Local development databases
+*.db
+*.db-shm
+*.db-wal
+*.sqlite
+*.sqlite3
+*.sqlite-shm
+*.sqlite-wal
+*.sqlite3-shm
+*.sqlite3-wal
+
+# SQL Server local database files
+*.mdf
+*.ldf
+
+# Database backups
+*.bak
+*.bacpac
+
+# Keep EF Core migrations in source control!
+# Do NOT ignore Migrations/
+
+##################################################
+# Configuration and Secrets
+##################################################
+
+# Local-only application settings
+appsettings.Local.json
+appsettings.*.local.json
+
+# Development secrets (when stored in files)
+secrets.json
+.env
+.env.*
+!.env.example
+!.env.sample
+
+# Certificates and private keys
+*.pfx
+*.p12
+*.pem
+*.key
+
+# Azure publish profiles
+*.publishsettings
+*.azurePubxml
+*.build.csdef
+PublishProfiles/
+
+##################################################
+# NuGet
+##################################################
+
+# NuGet packages (keep lock files if used)
+*.nupkg
+*.snupkg
+packages/
+.nuget/packages/
+
+# NuGet-generated files
+*.nuget.g.props
+*.nuget.g.targets
+
+##################################################
+# Test Results / Coverage
+##################################################
+
+TestResults/
+[Tt]est[Rr]esults/
+*.trx
+*.coverage
+*.coveragexml
+coverage/
+coverage-report/
+.coverage
+*.lcov
+
+##################################################
+# Logs and Temporary Files
+##################################################
+
+logs/
+Logs/
+*.log
+*.tmp
+*.temp
+*.swp
+*.swo
+*~
+*.bak.tmp
+
+# OS files
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+##################################################
+# Docker / Containers
+##################################################
+
+# Local Docker overrides (optional)
+docker-compose.override.local.yml
+docker-compose.local.yml
+
+##################################################
+# Generated / Cache
+##################################################
+
+.cache/
+.temp/
+tmp/
+temp/

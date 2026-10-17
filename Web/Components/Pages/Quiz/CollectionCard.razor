@@ -1,0 +1,16 @@
+<a href="@Url" class="quiz-card collection-card d-flex flex-column h-100">
+    <small class="card-type"> Collection </small>
+    
+    <h3 class="quiz-name">@Name</h3>
+    
+    <p class="quiz-language">@Languages</p>
+
+    <div class="quiz-meta mt-auto">
+        @CollectionDto.QuizCount quizzes
+    </div>
+</a>
+
+@code {
+    [Parameter, EditorRequired]
+    public CollectionDto Collection {get;set;} = default!;
+}
