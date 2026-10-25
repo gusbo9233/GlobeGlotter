@@ -201,3 +201,7 @@ docker-compose.local.yml
 .temp/
 tmp/
 temp/
+
+# .NET build artifacts
+**/bin/
+**/obj/
