@@ -1,0 +1,282 @@
+﻿
+@page "/library"
+@page "/library/{CollectionId:guid}"
+
+@using Shared.DTOs
+@using Web.Components.Quiz
+@using MudBlazor
+
+@inject MockLibraryStore Store
+@inject IDialogService Dialogs
+@inject ISnackbar Snackbar
+
+<PageTitle>Quiz Library</PageTitle>
+
+<MudContainer MaxWidth="MaxWidth.Large" Class="py-6">
+
+    @if (notFound)
+    {
+        <MudAlert Severity="Severity.Warning">
+            Collection not found.
+        </MudAlert>
+
+        <MudButton Href="/library">
+            Back to library
+        </MudButton>
+    }
+    else
+    {
+        <!-- Breadcrumbs -->
+        <MudBreadcrumbs Items="breadcrumbs" Class="mb-4" />
+
+        <MudText Typo="Typo.h4">
+            @(Current?.Name ?? "My Library")
+        </MudText>
+
+        <MudText Typo="Typo.body2"
+                 Color="Color.Secondary"
+                 Class="mb-6">
+            Collection depth: @Depth / @MockLibraryStore.MaxDepth
+        </MudText>
+
+        <!-- Collections -->
+        <MudText Typo="Typo.h5" Class="mb-3">
+            Collections
+        </MudText>
+
+        @if (Depth < MockLibraryStore.MaxDepth)
+        {
+            <MudGrid Spacing="2" Class="mb-4">
+
+                <MudItem xs="12" sm="8" md="6">
+                    <MudTextField T="string"
+                                  Label="Collection name"
+                                  Variant="Variant.Outlined"
+                                  Immediate="true"
+                                  @bind-Value="newCollectionName" />
+                </MudItem>
+
+                <MudItem xs="12" sm="4" md="3">
+                    <MudButton Color="Color.Primary"
+                               Variant="Variant.Filled"
+                               Disabled="@string.IsNullOrWhiteSpace(newCollectionName)"
+                               OnClick="AddCollection">
+                        Add Collection
+                    </MudButton>
+                </MudItem>
+
+            </MudGrid>
+        }
+        else
+        {
+            <MudAlert Severity="Severity.Info" Class="mb-4">
+                Maximum collection depth reached.
+            </MudAlert>
+        }
+
+        <MudGrid Spacing="3" Class="mb-8">
+            @foreach (var collection in VisibleCollections)
+            {
+                <MudItem xs="12" sm="6" md="4"
+                         @key="collection.Id">
+
+                    <CollectionCard
+                        Collection="collection"
+                        OnDelete="DeleteCollectionAsync" />
+
+                </MudItem>
+            }
+        </MudGrid>
+
+        <!-- Quizzes -->
+        <MudText Typo="Typo.h5" Class="mb-3">
+            Quizzes
+        </MudText>
+
+        <MudGrid Spacing="2" Class="mb-4">
+
+            <MudItem xs="12" sm="8" md="6">
+                <MudTextField T="string"
+                              Label="Quiz name"
+                              Variant="Variant.Outlined"
+                              Immediate="true"
+                              @bind-Value="newQuizName" />
+            </MudItem>
+
+            <MudItem xs="12" sm="4" md="3">
+                <MudButton Color="Color.Primary"
+                           Variant="Variant.Filled"
+                           Disabled="@string.IsNullOrWhiteSpace(newQuizName)"
+                           OnClick="AddQuiz">
+                    Add Quiz
+                </MudButton>
+            </MudItem>
+
+        </MudGrid>
+
+        <MudGrid Spacing="3">
+            @foreach (var quiz in VisibleQuizzes)
+            {
+                <MudItem xs="12" sm="6" md="3"
+                         @key="quiz.Id">
+
+                    <QuizCard
+                        Quiz="quiz"
+                        OnDelete="DeleteQuizAsync" />
+
+                </MudItem>
+            }
+        </MudGrid>
+    }
+
+</MudContainer>
+
+@code {
+    [Parameter]
+    public Guid? CollectionId { get; set; }
+
+    private List<CollectionDto> path = [];
+    private List<BreadcrumbItem> breadcrumbs = [];
+
+    private string newCollectionName = "";
+    private string newQuizName = "";
+
+    private bool notFound;
+
+    private CollectionDto? Current =>
+        path.Count == 0 ? null : path[^1];
+
+    private int Depth => path.Count;
+
+    private List<CollectionDto> VisibleCollections =>
+        Current?.Collections ?? Store.RootCollections;
+
+    private List<QuizDto> VisibleQuizzes =>
+        Current?.Quizzes ?? Store.RootQuizzes;
+
+    protected override void OnParametersSet()
+    {
+        var result = CollectionId is Guid id
+            ? Store.GetPath(id)
+            : new List<CollectionDto>();
+
+        notFound = result is null;
+        path = result ?? [];
+
+        newCollectionName = "";
+        newQuizName = "";
+
+        breadcrumbs =
+        [
+            new BreadcrumbItem(
+                "My Library",
+                href: path.Count == 0 ? null : "/library",
+                disabled: path.Count == 0)
+        ];
+
+        for (int i = 0; i < path.Count; i++)
+        {
+            var collection = path[i];
+            bool isCurrent = i == path.Count - 1;
+
+            breadcrumbs.Add(new BreadcrumbItem(
+                collection.Name,
+                href: isCurrent
+                    ? null
+                    : $"/library/{collection.Id}",
+                disabled: isCurrent));
+        }
+    }
+
+    private void AddCollection()
+    {
+        bool added = Store.AddCollection(
+            CollectionId,
+            newCollectionName
+        );
+
+        if (!added)
+        {
+            Snackbar.Add(
+                "Could not create collection.",
+                Severity.Error);
+            return;
+        }
+
+        newCollectionName = "";
+
+        Snackbar.Add(
+            "Collection created.",
+            Severity.Success);
+    }
+
+    private void AddQuiz()
+    {
+        bool added = Store.AddQuiz(
+            CollectionId,
+            newQuizName
+        );
+
+        if (!added)
+        {
+            Snackbar.Add(
+                "Could not create quiz.",
+                Severity.Error);
+            return;
+        }
+
+        newQuizName = "";
+
+        Snackbar.Add(
+            "Quiz created.",
+            Severity.Success);
+    }
+
+    private async Task DeleteCollectionAsync(Guid id)
+    {
+        bool? confirmed = await Dialogs.ShowMessageBoxAsync(
+            title: "Delete collection?",
+            message: "This will also delete all nested collections and quizzes.",
+            yesText: "Delete",
+            cancelText: "Cancel"
+        );
+
+        if (confirmed != true)
+            return;
+
+        bool deleted = Store.DeleteCollection(id);
+
+        Snackbar.Add(
+            deleted
+                ? "Collection deleted."
+                : "Collection not found.",
+            deleted
+                ? Severity.Success
+                : Severity.Error
+        );
+    }
+
+    private async Task DeleteQuizAsync(Guid id)
+    {
+        bool? confirmed = await Dialogs.ShowMessageBoxAsync(
+            title: "Delete quiz?",
+            message: "This will delete the quiz and all its words.",
+            yesText: "Delete",
+            cancelText: "Cancel"
+        );
+
+        if (confirmed != true)
+            return;
+
+        bool deleted = Store.DeleteQuiz(CollectionId, id);
+
+        Snackbar.Add(
+            deleted
+                ? "Quiz deleted."
+                : "Quiz not found.",
+            deleted
+                ? Severity.Success
+                : Severity.Error
+        );
+    }
+}

@@ -1,0 +1,11 @@
+/* Scoped to the HTML wrapper in QuizCard.razor */
+.quiz-card-shell { height: 100%; }
+
+.quiz-card-shell ::deep .quiz-card {
+    height: 100%;
+    display:flex;
+    flex-direction: column;
+    border-left: 3px solid #53e076;
+}
+
+.quiz-card-shell ::deep .mud-card-content {flex: 1;}

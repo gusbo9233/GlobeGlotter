@@ -1,6 +1,8 @@
+namespace Shared.DTOs;
+
 public sealed record QuizDto
 (
-    Guid int Id,
+    Guid Id,
     string Name,
-    IReadOnlyList<Word> Words
+    IReadOnlyList<WordDto> Words
 );

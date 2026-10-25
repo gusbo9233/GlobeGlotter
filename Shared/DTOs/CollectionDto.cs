@@ -1,6 +1,8 @@
-public sealed record CollectionDto 
-(
+namespace Shared.DTOs;
+
+public sealed record CollectionDto(
     Guid Id,
     string Name,
-    IReadOnlyList<QuizDto> Quizzes
+    List<QuizDto> Quizzes,
+    List<CollectionDto> Collections
 );

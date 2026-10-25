@@ -1,0 +1,12 @@
+/home/gusbo923/Glosify/Shared/bin/Debug/net10.0/Shared.deps.json
+/home/gusbo923/Glosify/Shared/bin/Debug/net10.0/Shared.dll
+/home/gusbo923/Glosify/Shared/bin/Debug/net10.0/Shared.pdb
+/home/gusbo923/Glosify/Shared/obj/Debug/net10.0/Shared.GeneratedMSBuildEditorConfig.editorconfig
+/home/gusbo923/Glosify/Shared/obj/Debug/net10.0/Shared.AssemblyInfoInputs.cache
+/home/gusbo923/Glosify/Shared/obj/Debug/net10.0/Shared.AssemblyInfo.cs
+/home/gusbo923/Glosify/Shared/obj/Debug/net10.0/Shared.csproj.CoreCompileInputs.cache
+/home/gusbo923/Glosify/Shared/obj/Debug/net10.0/Shared.sourcelink.json
+/home/gusbo923/Glosify/Shared/obj/Debug/net10.0/Shared.dll
+/home/gusbo923/Glosify/Shared/obj/Debug/net10.0/refint/Shared.dll
+/home/gusbo923/Glosify/Shared/obj/Debug/net10.0/Shared.pdb
+/home/gusbo923/Glosify/Shared/obj/Debug/net10.0/ref/Shared.dll

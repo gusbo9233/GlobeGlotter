@@ -1,16 +1,37 @@
-<a href="@Url" class="quiz-card collection-card d-flex flex-column h-100">
-    <small class="card-type"> Collection </small>
-    
-    <h3 class="quiz-name">@Name</h3>
-    
-    <p class="quiz-language">@Languages</p>
+@inject NavigationManager Navigation 
 
-    <div class="quiz-meta mt-auto">
-        @CollectionDto.QuizCount quizzes
-    </div>
-</a>
+<div class="collection-card-shell">
+    <MudCard Class="collection-card" 
+            Outlined="true"
+            @onclick="OpenCollection">
+        <MudCardContent>
+            <MudText Typo="Typo.overline" Color="Color.Info">
+                Collection
+            </MudText>
+            <MudText Typo="Typo.h6">@Collection.Name</MudText>
+            <MudText Typo="Typo.body2" Color="Color.Secondary">
+                @Collection.Collections.Count collections
+                @Collection.Quizzes.Count quizzes
+            </MudText>
+        </MudCardContent>
+        <MudCardActions>
+            <MudButton Variant="Variant.Text" Color="Color.Error"
+                        OnClick="() => OnDelete.InvokeAsync(Collection.Id)">
+                    Delete
+            </MudButton>
+        </MudCardActions>
+    </MudCard>    
+</div>
 
 @code {
     [Parameter, EditorRequired]
-    public CollectionDto Collection {get;set;} = default!;
+    public CollectionDto Collection {get; set;} = default!;
+
+    private void OpenCollection(){
+        Navigation.NavigateTo($"/library/{Collection.Id}");
+
+    }
+
+    [Parameter]
+    public EventCallback<Guid> OnDelete {get; set;}
 }
