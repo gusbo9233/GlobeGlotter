@@ -1,5 +1,4 @@
-﻿
-@page "/library"
+﻿@page "/library"
 @page "/library/{CollectionId:guid}"
 
 @using Shared.DTOs
@@ -14,120 +13,90 @@
 
 <MudContainer MaxWidth="MaxWidth.Large" Class="py-6">
 
-    @if (notFound)
+    <!-- Breadcrumbs -->
+    <MudBreadcrumbs Items="breadcrumbs" Class="mb-4" />
+
+    <MudText Typo="Typo.h4">
+        @(Current?.Name ?? "My Library")
+    </MudText>
+
+    <MudText Typo="Typo.body2" Color="Color.Secondary" Class="mb-6">
+        Collection depth: @Depth / @MockLibraryStore.MaxDepth
+    </MudText>
+
+    <!-- Collections -->
+    <MudText Typo="Typo.h5" Class="mb-3">
+        Collections
+    </MudText>
+
+    @if (Depth < MockLibraryStore.MaxDepth)
     {
-        <MudAlert Severity="Severity.Warning">
-            Collection not found.
-        </MudAlert>
-
-        <MudButton Href="/library">
-            Back to library
-        </MudButton>
-    }
-    else
-    {
-        <!-- Breadcrumbs -->
-        <MudBreadcrumbs Items="breadcrumbs" Class="mb-4" />
-
-        <MudText Typo="Typo.h4">
-            @(Current?.Name ?? "My Library")
-        </MudText>
-
-        <MudText Typo="Typo.body2"
-                 Color="Color.Secondary"
-                 Class="mb-6">
-            Collection depth: @Depth / @MockLibraryStore.MaxDepth
-        </MudText>
-
-        <!-- Collections -->
-        <MudText Typo="Typo.h5" Class="mb-3">
-            Collections
-        </MudText>
-
-        @if (Depth < MockLibraryStore.MaxDepth)
-        {
-            <MudGrid Spacing="2" Class="mb-4">
-
-                <MudItem xs="12" sm="8" md="6">
-                    <MudTextField T="string"
-                                  Label="Collection name"
-                                  Variant="Variant.Outlined"
-                                  Immediate="true"
-                                  @bind-Value="newCollectionName" />
-                </MudItem>
-
-                <MudItem xs="12" sm="4" md="3">
-                    <MudButton Color="Color.Primary"
-                               Variant="Variant.Filled"
-                               Disabled="@string.IsNullOrWhiteSpace(newCollectionName)"
-                               OnClick="AddCollection">
-                        Add Collection
-                    </MudButton>
-                </MudItem>
-
-            </MudGrid>
-        }
-        else
-        {
-            <MudAlert Severity="Severity.Info" Class="mb-4">
-                Maximum collection depth reached.
-            </MudAlert>
-        }
-
-        <MudGrid Spacing="3" Class="mb-8">
-            @foreach (var collection in VisibleCollections)
-            {
-                <MudItem xs="12" sm="6" md="4"
-                         @key="collection.Id">
-
-                    <CollectionCard
-                        Collection="collection"
-                        OnDelete="DeleteCollectionAsync" />
-
-                </MudItem>
-            }
-        </MudGrid>
-
-        <!-- Quizzes -->
-        <MudText Typo="Typo.h5" Class="mb-3">
-            Quizzes
-        </MudText>
-
         <MudGrid Spacing="2" Class="mb-4">
 
             <MudItem xs="12" sm="8" md="6">
-                <MudTextField T="string"
-                              Label="Quiz name"
-                              Variant="Variant.Outlined"
-                              Immediate="true"
-                              @bind-Value="newQuizName" />
+                <MudTextField T="string" Label="Collection name" Variant="Variant.Outlined" Immediate="true"
+                              @bind-Value="newCollectionName" />
             </MudItem>
 
             <MudItem xs="12" sm="4" md="3">
-                <MudButton Color="Color.Primary"
-                           Variant="Variant.Filled"
-                           Disabled="@string.IsNullOrWhiteSpace(newQuizName)"
-                           OnClick="AddQuiz">
-                    Add Quiz
+                <MudButton Color="Color.Primary" Variant="Variant.Filled"
+                           Disabled="@string.IsNullOrWhiteSpace(newCollectionName)" OnClick="AddCollection">
+                    Add Collection
                 </MudButton>
             </MudItem>
 
         </MudGrid>
-
-        <MudGrid Spacing="3">
-            @foreach (var quiz in VisibleQuizzes)
-            {
-                <MudItem xs="12" sm="6" md="3"
-                         @key="quiz.Id">
-
-                    <QuizCard
-                        Quiz="quiz"
-                        OnDelete="DeleteQuizAsync" />
-
-                </MudItem>
-            }
-        </MudGrid>
     }
+    else
+    {
+        <MudAlert Severity="Severity.Info" Class="mb-4">
+            Maximum collection depth reached.
+        </MudAlert>
+    }
+
+    <MudGrid Spacing="3" Class="mb-8">
+        @foreach (var collection in VisibleCollections)
+        {
+            <MudItem xs="12" sm="6" md="4" @key="collection.Id">
+
+                <CollectionCard Collection="collection" OnDelete="DeleteCollectionAsync" />
+
+            </MudItem>
+        }
+    </MudGrid>
+
+    <!-- Quizzes -->
+    <MudText Typo="Typo.h5" Class="mb-3">
+        Quizzes
+    </MudText>
+
+    <MudGrid Spacing="2" Class="mb-4">
+
+        <MudItem xs="12" sm="8" md="6">
+            <MudTextField T="string" Label="Quiz name" Variant="Variant.Outlined" Immediate="true"
+                          @bind-Value="newQuizName" />
+        </MudItem>
+
+        <MudItem xs="12" sm="4" md="3">
+            <MudButton Color="Color.Primary" Variant="Variant.Filled" Disabled="@string.IsNullOrWhiteSpace(newQuizName)"
+                       OnClick="AddQuiz">
+                Add Quiz
+            </MudButton>
+        </MudItem>
+
+    </MudGrid>
+
+    <MudGrid Spacing="3">
+        @foreach (var quiz in VisibleQuizzes)
+        {
+            <MudItem xs="12" sm="6" md="3" @key="quiz.Id">
+
+                <QuizCard Quiz="quiz" OnDelete="DeleteQuizAsync" />
+
+            </MudItem>
+        }
+    </MudGrid>
+    
 
 </MudContainer>
 

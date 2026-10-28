@@ -1,29 +1,56 @@
-﻿<!DOCTYPE html>
+﻿
+@using static Microsoft.AspNetCore.Components.Web.RenderMode
+
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0" />
+
     <base href="/" />
+
     <ResourcePreloader />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Lora:wght@400;500;600&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
-    <link rel="stylesheet" href="@Assets["lib/bootstrap/dist/css/bootstrap.min.css"]" />
-    <link rel="stylesheet" href="@Assets["app.css"]" />
-    <link rel="stylesheet" href="@Assets["Web.styles.css"]" />
+
+    <!-- Fonts -->
+    <link rel="preconnect"
+          href="https://fonts.googleapis.com" />
+
+    <link rel="preconnect"
+          href="https://fonts.gstatic.com"
+          crossorigin />
+
+    <link href="https://fonts.googleapis.com/css2?family=Lora:wght@400;500;600&amp;family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=swap"
+          rel="stylesheet" />
+
+    <!-- MudBlazor -->
+    <link rel="stylesheet"
+          href="@Assets["_content/MudBlazor/MudBlazor.min.css"]" />
+
+    <!-- Glosify styles -->
+    <link rel="stylesheet"
+          href="@Assets["app.css"]" />
+
+    <link rel="stylesheet"
+          href="@Assets["Web.styles.css"]" />
+
     <ImportMap />
-    <link rel="icon" type="image/png" href="favicon.png" />
-    <link href="_content/MudBlazor/Mudblazor.min.css" rel="stylesheet"/>
-    <HeadOutlet @rendermode="InteractiveServer"/>
-    <Routes @rendermode="InteractiveServer"/>
-    <script src="_content/MudBlazor/MudBlazor.min.js"></script>
+
+    <link rel="icon"
+          type="image/png"
+          href="favicon.png" />
+
+    <HeadOutlet @rendermode="InteractiveServer" />
 </head>
 
 <body>
-    <Routes />
+    <Routes @rendermode="InteractiveServer" />
+
     <ReconnectModal />
+
     <script src="@Assets["_framework/blazor.web.js"]"></script>
+    <script src="@Assets["_content/MudBlazor/MudBlazor.min.js"]"></script>
 </body>
 
 </html>

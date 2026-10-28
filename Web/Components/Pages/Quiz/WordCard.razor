@@ -1,0 +1,45 @@
+<div class="word-card-container">
+    <MudCard Class="word-card">
+        <MudStack Row="true"
+                  AlignItems="AlignItems.Center"
+                  Spacing="3">
+
+            <MudPaper Class="word-icon d-flex align-center justify-center"
+                      Elevation="0">
+                <MudIcon Icon="@Icons.Material.Filled.Translate"
+                         Color="Color.Success" />
+            </MudPaper>
+
+            <MudStack Class="word-content" Spacing="0">
+                <MudText Typo="Typo.subtitle1" Class="word-title">
+                    @Word.Original
+                </MudText>
+                <MudText Typo="Typo.body2" Class="word-translation">
+                    @Word.Translation
+                </MudText>
+            </MudStack>
+
+            <MudIconButton Icon="@Icons.Material.Filled.VolumeUp"
+                           Color="Color.Success"
+                           Variant="Variant.Outlined"
+                           Size="Size.Small"
+                           OnClick="PlayAudio" />
+
+            <MudMenu Icon="@Icons.Material.Filled.MoreVert"
+                     Color="Color.Inherit"
+                     Size="Size.Small">
+                <MudMenuItem OnClick="EditWord">Edit</MudMenuItem>
+                <MudMenuItem OnClick="DeleteWord">Delete</MudMenuItem>
+            </MudMenu>
+
+        </MudStack>
+    </MudCard>
+</div>
+
+@code {
+    [Parameter, EditorRequired]
+    public WordDto Word {get; set;} = default!;
+    private void PlayAudio() { }
+    private void EditWord() { }
+    private void DeleteWord() { }
+}

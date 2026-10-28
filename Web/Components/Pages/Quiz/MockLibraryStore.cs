@@ -207,4 +207,122 @@ public sealed class MockLibraryStore
 
         return null;
     }
+
+
+    public bool AddWord(Guid id, string word, string translation)
+    {
+        if (string.IsNullOrWhiteSpace(word) ||
+            string.IsNullOrWhiteSpace(translation))
+            return false;
+
+        var quiz = FindQuiz(id);
+
+        if (quiz is null)
+            return false;
+
+        var newWord = new WordDto(
+            Guid.NewGuid(),
+            word.Trim(),
+            translation.Trim()
+        );
+
+        var updatedQuiz = quiz with
+        {
+            Words = quiz.Words.Append(newWord).ToList()
+        };
+
+        return UpdateQuiz(updatedQuiz);
+    }
+
+    private bool UpdateQuiz(QuizDto updatedQuiz)
+    {
+        var index = RootQuizzes.FindIndex(
+            q => q.Id == updatedQuiz.Id);
+
+        if (index >= 0)
+        {
+            RootQuizzes[index] = updatedQuiz;
+            return true;
+        }
+
+        return UpdateQuizInCollections(
+            RootCollections, updatedQuiz);
+    }
+
+    private static bool UpdateQuizInCollections(
+        IEnumerable<CollectionDto> collections,
+        QuizDto updatedQuiz)
+    {
+        foreach (var collection in collections)
+        {
+            var index = collection.Quizzes.FindIndex(
+                q => q.Id == updatedQuiz.Id);
+
+            if (index >= 0)
+            {
+                collection.Quizzes[index] = updatedQuiz;
+                return true;
+            }
+
+            if (UpdateQuizInCollections(
+                collection.Collections, updatedQuiz))
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    public bool DeleteWord(Guid quizId, Guid wordId)
+    {
+        var quiz = FindQuiz(quizId);
+
+        if (quiz is null ||
+            !quiz.Words.Any(w => w.Id == wordId))
+            return false;
+
+        var updatedQuiz = quiz with
+        {
+            Words = quiz.Words
+                .Where(w => w.Id != wordId)
+                .ToList()
+        };
+
+        return UpdateQuiz(updatedQuiz);
+    }
+
+    public bool UpdateWord(
+        Guid quizId,
+        Guid wordId,
+        string original,
+        string translation)
+    {
+        if (string.IsNullOrWhiteSpace(original) ||
+            string.IsNullOrWhiteSpace(translation))
+            return false;
+
+        var quiz = FindQuiz(quizId);
+
+        if (quiz is null ||
+            !quiz.Words.Any(w => w.Id == wordId))
+            return false;
+
+        var updatedQuiz = quiz with
+        {
+            Words = quiz.Words.Select(w =>
+                w.Id == wordId
+                    ? w with
+                    {
+                        Original = original.Trim(),
+                        Translation = translation.Trim()
+                    }
+                    : w
+            ).ToList()
+        };
+
+        return UpdateQuiz(updatedQuiz);
+    }
+
+
 }

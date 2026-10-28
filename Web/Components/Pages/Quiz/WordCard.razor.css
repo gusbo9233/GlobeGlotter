@@ -1,0 +1,28 @@
+.word-card-container ::deep .word-card {
+    padding: 16px;
+    background-color: #0f1b2d;
+    border-radius: 8px;
+    max-width: 365px;
+}
+
+.word-card-container ::deep .word-icon {
+    width: 46px;
+    height: 46px;
+    min-width: 46px;
+    background-color: #233249;
+    border-radius: 8px;
+}
+
+.word-card-container ::deep .word-content {
+    flex: 1;
+    min-width: 0;
+}
+
+.word-card-container ::deep .word-title {
+    font-weight: 600;
+    color: #e3eaff;
+}
+
+.word-card-container ::deep .word-translation {
+    color: #bdc9cc;
+}

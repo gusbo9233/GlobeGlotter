@@ -1,0 +1,16 @@
+@page "/quiz{QuizId:guid}"
+
+@inject MockLibraryStore Store
+
+<PageTitle> Quiz </PageTitle>
+
+<MudContainer MaxWidth="MaxWidth.Large" Class="py-6">
+    
+    <MudText 
+
+</MudContainer>
+
+@code {
+    [Parameter, EditorRequired]
+    public QuizDto Quiz {get; set;} = default!;
+}

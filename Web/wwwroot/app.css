@@ -35,6 +35,8 @@
     --radius-sm: 8px;
     --radius-md: 10px;
     --radius-lg: 16px;
+
+    --collection-accent: #78b7ff;
 }
 
 /* ==========================
@@ -92,4 +94,29 @@ input, select, textarea {
 :focus-visible {
     outline: 2px solid var(--primary);
     outline-offset: 3px;
+}
+
+
+/* Shared card appearance */
+.glosify-collection-card,
+.glosify-quiz-card {
+    border-radius: var(--radius-lg);
+    background: var(--surface);
+    border: 1px solid var(--outline-var);
+}
+
+/* Collection accent */
+.glosify-collection-card {
+    border-left: 3px solid var(--collection-accent);
+}
+
+/* Quiz accent */
+.glosify-quiz-card {
+    border-left: 3px solid var(--primary);
+}
+
+/* Hover */
+.glosify-collection-card:hover,
+.glosify-quiz-card:hover {
+    background: var(--surface-high);
 }

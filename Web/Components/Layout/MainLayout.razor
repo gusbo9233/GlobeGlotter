@@ -1,25 +1,72 @@
-﻿@inherits LayoutComponentBase
+﻿
+@inherits LayoutComponentBase
+@using MudBlazor
+@using Web.Theme
 
-<MudThemeProvider />
+<MudThemeProvider 
+        Theme="@GlosifyTheme.Theme"
+        IsDarkMode = "true"
+        ObserveSystemDarkModeChange="false"/>
+                     />
 <MudPopoverProvider />
 <MudDialogProvider />
 <MudSnackbarProvider />
 
+<MudLayout>
 
-<div class="d-flex flex-column flex-md-row min-vh-100">
-    
-    <div class="app-sidebar p-3 flex-shrink-0">
-        <NavMenu />
-    </div>
+    <MudAppBar Elevation="1">
+        <MudIconButton
+            Icon="@Icons.Material.Filled.Menu"
+            Color="Color.Inherit"
+            Edge="Edge.Start"
+            OnClick="ToggleDrawer" />
 
-    <main class="flex-grow-1 p-4">
+        <MudText Typo="Typo.h6">
+            Glosify
+        </MudText>
+    </MudAppBar>
 
+    <MudDrawer
+        @bind-Open="_drawerOpen"
+        Variant="DrawerVariant.Responsive"
+        Breakpoint="Breakpoint.Md"
+        Elevation="1">
+
+        <MudDrawerHeader>
+            <MudText Typo="Typo.h6">
+                Navigation
+            </MudText>
+        </MudDrawerHeader>
+
+        <MudNavMenu>
+            <MudNavLink
+                Href="/"
+                Match="NavLinkMatch.All"
+                Icon="@Icons.Material.Filled.Home">
+                Home
+            </MudNavLink>
+
+            <MudNavLink
+                Href="/library"
+                Match="NavLinkMatch.Prefix"
+                Icon="@Icons.Material.Filled.Folder">
+                My Library
+            </MudNavLink>
+        </MudNavMenu>
+
+    </MudDrawer>
+
+    <MudMainContent>
         @Body
-    </main>
-</div>
+    </MudMainContent>
 
-<div id="blazor-error-ui" data-nosnippet>
-    An unhandled error has occurred.
-    <a href="." class="reload">Reload</a>
-    <span class="dismiss">🗙</span>
-</div>
+</MudLayout>
+
+@code {
+    private bool _drawerOpen = true;
+
+    private void ToggleDrawer()
+    {
+        _drawerOpen = !_drawerOpen;
+    }
+}
